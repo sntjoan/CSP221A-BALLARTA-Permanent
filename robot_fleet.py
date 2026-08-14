@@ -89,19 +89,51 @@ class DroneRobot(Robot):
         self.use_battery(30)
         return f"{self.name} completed an aerial task at up to {self.max_altitude}m."
 
-def fleet_report(robots):
-    for robot in robots:
+    def fleet_report(robots):
+     for robot in robots:
         print(str(robot))
 
-def run_task_safely(robot, **kwargs):
-    try:
+    def run_task_safely(robot, **kwargs):
+     try:
         result = robot.perform_task(**kwargs)
-    except InsufficientBatteryError as error:
+     except InsufficientBatteryError as error:
         logging.error(error)
-    else:
+     else:
         print(result)
-    finally:
+     finally:
         print(f"{robot.name} current battery: {robot.battery}%")
 
 
+class BrokenTeam:
+    members = []
 
+    def __init__(self, name):
+        self.name = name
+
+
+def demonstrate_mutable_class_attribute():
+    team_a = BrokenTeam("Team A")
+    team_b = BrokenTeam("Team B")
+
+    team_a.members.append("Robot 1")
+
+    print("Broken version:")
+    print("Team A:", team_a.members)
+    print("Team B:", team_b.members)
+
+    class CorrectTeam:
+        def __init__(self, name):
+            self.name = name
+            self.members = []
+
+    correct_a = CorrectTeam("Team A")
+    correct_b = CorrectTeam("Team B")
+
+    correct_a.members.append("Robot 1")
+
+    print("\nCorrected version:")
+    print("Team A:", correct_a.members)
+    print("Team B:", correct_b.members)
+
+
+demonstrate_mutable_class_attribute()
