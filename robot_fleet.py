@@ -51,3 +51,16 @@ class Robot(ABC):
     @abstractmethod
     def perform_task(self):
         pass
+
+class CleaningRobot(Robot):
+    def __init__(self, name, battery=100, dust_capacity=5):
+        super().__init__(name, battery)
+        self.dust_capacity = dust_capacity
+
+    def perform_task(self):
+        self.use_battery(20)
+        return f"{self.name} cleaned an area with {self.dust_capacity}L dust capacity."
+
+
+
+
