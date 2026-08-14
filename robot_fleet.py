@@ -62,5 +62,20 @@ class CleaningRobot(Robot):
         return f"{self.name} cleaned an area with {self.dust_capacity}L dust capacity."
 
 
+class DroneRobot(Robot):
+    def __init__(self, name, battery=100, max_altitude=100):
+        super().__init__(name, battery)
+        self.max_altitude = max_altitude
 
+    def perform_task(self):
+        self.use_battery(30)
+        return f"{self.name} completed an aerial task at up to {self.max_altitude}m."
+    
+
+
+drone = DroneRobot("Aqua-Drone", battery=100, max_altitude=500)
+
+print(drone)
+print(drone.perform_task())
+print(drone)
 
