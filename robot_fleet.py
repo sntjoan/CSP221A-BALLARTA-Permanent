@@ -70,12 +70,11 @@ class DroneRobot(Robot):
     def perform_task(self):
         self.use_battery(30)
         return f"{self.name} completed an aerial task at up to {self.max_altitude}m."
-    
 
 
-drone = DroneRobot("Aqua-Drone", battery=100, max_altitude=500)
+def fleet_report(robots):
+    for robot in robots:
+        print(str(robot))
 
-print(drone)
-print(drone.perform_task())
-print(drone)
+
 
