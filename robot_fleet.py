@@ -1,5 +1,16 @@
 from abc import ABC, abstractmethod
+from functools import wraps
 import logging
+
+def log_action(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        logging.info(f"Starting {func.__name__}")
+        result = func(*args, **kwargs)
+        logging.info(f"Finished {func.__name__}")
+        return result
+
+    return wrapper
 
 class InsufficientBatteryError(Exception):
     def __init__(self, robot_name, required, available):
@@ -12,8 +23,6 @@ class InsufficientBatteryError(Exception):
             f"but only has {available}%."
         )
         super().__init__(message)
-
-    
 
 class Robot(ABC):
     manufacturer = "RoboTech"
@@ -62,16 +71,16 @@ class CleaningRobot(Robot):
         self.use_battery(20)
         return f"{self.name} cleaned an area with {self.dust_capacity}L dust capacity."
 
-
 class DroneRobot(Robot):
     def __init__(self, name, battery=100, max_altitude=100):
         super().__init__(name, battery)
         self.max_altitude = max_altitude
 
+    @log_action
     def perform_task(self):
+        """Perform an aerial task using the drone."""
         self.use_battery(30)
         return f"{self.name} completed an aerial task at up to {self.max_altitude}m."
-
 
 def fleet_report(robots):
     for robot in robots:
@@ -86,4 +95,5 @@ def run_task_safely(robot, **kwargs):
         print(result)
     finally:
         print(f"{robot.name} current battery: {robot.battery}%")
+
 
