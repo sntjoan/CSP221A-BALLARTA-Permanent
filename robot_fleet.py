@@ -136,4 +136,4 @@ def demonstrate_mutable_class_attribute():
     print("Team B:", correct_b.members)
 
 
-# Temporary feature for Git revert demonstration
+demonstrate_mutable_class_attribute()
