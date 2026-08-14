@@ -76,6 +76,13 @@ class DroneRobot(Robot):
         super().__init__(name, battery)
         self.max_altitude = max_altitude
 
+    @classmethod
+    def from_config(cls, config):
+     return cls(
+        config["name"],
+        config.get("battery", 100)
+    )
+
     @log_action
     def perform_task(self):
         """Perform an aerial task using the drone."""
@@ -95,5 +102,6 @@ def run_task_safely(robot, **kwargs):
         print(result)
     finally:
         print(f"{robot.name} current battery: {robot.battery}%")
+
 
 
